@@ -14,7 +14,17 @@ class ConfRouter
         */
 
 
-        if( $controller == 'index'){ Main::index(); };
+        if( $controller == 'index' ){view('index',[]); };
+
+        if( $controller == 'order' &&  $action == 'default' ){view('order/index',[]); };
+
+        if( $controller == 'profile' && $action == 'default'){ view('profile/index',[]) ;};
+
+        if( $controller == 'suiver' && $action == 'default'){ view('suiver/index',[]) ;};
+
+        if( $controller == 'logout' ){ logout();};
+
+
 
 
 

@@ -3,6 +3,7 @@
 namespace APP\LIB;
 use APP\LIB\AdminRouter;
 use APP\LIB\ConfRouter;
+use APP\LIB\Auth;
 
 
 
@@ -22,11 +23,11 @@ class FrontController
 
          //if user not logged 
 
-         if(isset($_GET)):
+         if($_SERVER['REQUEST_METHOD'] === 'GET'):
 
                 if($url == '/login' && $user['user_type'] == 0 ){
 
-                    echo 'login page';
+                    view('login',[]);
 
                 }elseif($user['user_type'] == 0 ){
 
@@ -36,6 +37,7 @@ class FrontController
             
 
                 if( $user['user_type'] == 1){
+                  
                     AdminRouter::get( $this->_controller , $this->_action ,  $this->_params );
                 }
                 
@@ -46,11 +48,18 @@ class FrontController
 
 
                 };
-         elseif(isset($_POST)):
+         elseif($_SERVER['REQUEST_METHOD'] === 'POST'):
 
+           
             if($url == '/login' && $user['user_type'] == 0 ){
 
-                echo 'login page';
+                if(isset($_POST['login'])){
+
+                    $username = filter_var($_POST['username'], FILTER_SANITIZE_STRING);
+                    $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
+                    
+                    Auth::login( $username , $password );
+                }
 
             }elseif($user['user_type'] == 0 ){
 
@@ -60,7 +69,7 @@ class FrontController
         
 
             if( $user['user_type'] == 1){
-                ConfRouter::post( $this->_controller , $this->_action ,  $this->_params );
+                AdminRouter::post( $_REQUEST );
             }
             
 

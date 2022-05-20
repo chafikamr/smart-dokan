@@ -4,6 +4,6 @@ Class Main
 {
     public static function index()
     {
-        echo 'Hello confirmation !! This is Main View ';
+        include_once(APP_ROOT. DS .'app'. DS .'views'.DS . 'confirmation' .DS . 'main.view.php');
     }
 }
